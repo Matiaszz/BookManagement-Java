@@ -42,7 +42,19 @@ public class BookController {
     @PostMapping
     public ResponseEntity<ResponseMessage> create(@RequestBody BookModel bookModel) {
 
-        List<String> errors = bookService.validateBookFields(bookModel);
+        String[] fields = {
+                bookModel.getTitle(),
+                bookModel.getShortDescription(),
+                bookModel.getLongDescription(),
+                bookModel.getCoverImgUrl(),
+                bookModel.getPublisher(),
+                bookModel.getGenre(),
+                bookModel.getAuthor()
+        };
+
+        int[] maxLengths = { 100, 255, 1000, 255, 100, 50, 100 };
+
+        List<String> errors = bookService.validateBookFields(fields, maxLengths);
 
         if (bookModel.getAverageRating() == null) {
             errors.add("Average rating is required.");
