@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.CurrentTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +26,7 @@ public class UserModel {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @CurrentTimestamp
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 
     public UserModel(UUID id, String username, String password, LocalDateTime createdAt, LocalDateTime updatedAt) {
