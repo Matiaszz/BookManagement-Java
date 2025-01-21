@@ -17,18 +17,18 @@ public class UserController {
     @Autowired
     private IUserRepository userRepository;
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<ResponseMessage> create(@RequestBody UserModel userModel) {
 
         if (userModel.getUsername().length() > 50) {
             return ResponseEntity.badRequest().body(new ResponseMessage(
-                    "Username can't have more of 50 characters.", null, 400));
+                    "Username can't have more of 50 characters.", null));
         }
         var hashedPassword = BCrypt.withDefaults().hashToString(12, userModel.getPassword().toCharArray());
         userModel.setPassword(hashedPassword.toString());
 
         var userCreated = this.userRepository.save(userModel);
 
-        return ResponseEntity.ok().body(new ResponseMessage("User created successfully", userCreated, 200));
+        return ResponseEntity.ok().body(new ResponseMessage("User created successfully", userCreated));
     }
 }

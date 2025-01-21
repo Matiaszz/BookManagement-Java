@@ -3,8 +3,8 @@ package dev.matias.bookManagement.book;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import org.hibernate.annotations.CurrentTimestamp;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,15 +23,24 @@ public class BookModel {
     @Column(unique = true, nullable = false)
     private String title;
 
-    @Column(nullable = false)
-    private String description, coverImgUrl, publisher, genre, author;
+    @Column(columnDefinition = "TEXT")
+    private String shortDescription;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "TEXT")
+    private String longDescription;
+
+    @Column(columnDefinition = "TEXT")
+    private String coverImgUrl;
+
+    private String publisher;
+    private String genre;
+    private String author;
+
     private Double averageRating;
 
     @CreatedDate
     private LocalDateTime createdAt;
 
-    @CurrentTimestamp
+    @LastModifiedDate
     private LocalDateTime updatedAt;
 }
