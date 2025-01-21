@@ -3,8 +3,8 @@ package dev.matias.bookManagement.user;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.CurrentTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,10 +23,17 @@ public class UserModel {
     private String username;
     private String password;
 
-    @CreatedDate
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     @CurrentTimestamp
     private LocalDateTime updatedAt;
 
+    public UserModel(UUID id, String username, String password, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        setId(id);
+        setUsername(username);
+        setPassword(password);
+        setCreatedAt(createdAt);
+        setUpdatedAt(updatedAt);
+    }
 }
