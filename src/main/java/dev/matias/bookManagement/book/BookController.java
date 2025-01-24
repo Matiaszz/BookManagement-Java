@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.matias.bookManagement.dto.BookSummaryDTO;
 import dev.matias.bookManagement.dto.ResponseMessage;
 
 @RestController
@@ -24,19 +25,21 @@ public class BookController {
     private BookService bookService;
 
     @GetMapping
-    public ResponseEntity<ResponseMessage> get() {
+    public ResponseEntity<ResponseMessage> getSummaryOfAllBooks() {
         var allBooks = bookRepository.findAll();
-        return ResponseEntity.ok().body(new ResponseMessage("Success", allBooks));
+        var booksSummaries = allBooks.stream().map((book) -> new BookSummaryDTO(book));
+        return ResponseEntity.ok().body(new ResponseMessage("Success", booksSummaries));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ResponseMessage> getById(@PathVariable UUID id) {
         var book = bookRepository.findById(id);
+        var bookSummary = new BookSummaryDTO(book.get());
 
         if (book.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().body(new ResponseMessage("Success", book.get()));
+        return ResponseEntity.ok().body(new ResponseMessage("Success", bookSummary));
     }
 
     @PostMapping
